@@ -43,41 +43,35 @@ loadData(mapPath, 'json').then(async (mapData)=> {
     });
 
     //console.log('we can look at the new property we added', newMapData);
-    usMap(mapData)
-
-});
-
-async function usMap(mapData) {
     let svg = d3.select("svg");
     svg.attr('width', 1000);
     svg.attr('height', 1000);
-    svg.append('g').attr('id', 'mapLayer');
-
-     // Define a quantized scale to sort data values into buckets of color
-     let color = d3.scaleQuantize()
-     .range(["#edf8fb","#b2e2e2","#66c2a4","#2ca25f","#006d2c"]);
-
-     // Set input domain for color scale based on the min and max
-     /*
-     color.domain([
-        d3.min(stateData, function (d) {
-            return d.value;
-        }),
-        d3.max(stateData, function (d) {
-            return d.value;
-        })
-    ]);*/
-
-     console.log(mapData.features.map(m=> m.properties.ufos.length))
-     let min = d3.min(mapData.features.map(m=> m.properties.ufos.length));
-     let max = d3.max(mapData.features.map(m=> m.properties.ufos.length));
-     color.domain([min, max]);
 
     // In order to convert lat / lon (spherical!) coordinates to fit in the 2D
     // coordinate system of our screen, we need to create a projection function:
     // a USA-specific projection (that deals with Hawaii / Alaska)
     let projection = d3.geoAlbersUsa()
         .translate([500, 500]) // this centers the map in our SVG element
+        .scale([700]);
+        
+    drawMap(svg, projection, mapData);
+    drawMarkers(svg, projection, usUFOData);
+
+});
+
+function drawMap(svg, projection, mapData) {
+    
+    svg.append('g').attr('id', 'mapLayer');
+    
+     // Define a quantized scale to sort data values into buckets of color
+     let color = d3.scaleQuantize()
+     .range(["#D5D8DC","#808B96","#2C3E50","#212F3D","#17202A"]);
+
+     // Set input domain for color scale based on the min and max
+     console.log(mapData.features.map(m=> m.properties.ufos.length))
+     let min = d3.min(mapData.features.map(m=> m.properties.ufos.length));
+     let max = d3.max(mapData.features.map(m=> m.properties.ufos.length));
+     color.domain([min, max]);
         
     // This converts the projected lat/lon coordinates into an SVG path string
     let path = d3.geoPath()
@@ -90,10 +84,35 @@ async function usMap(mapData) {
         // here we use the familiar d attribute again to define the path
         .attr("d", path)
         .style("fill", function (d) {
-            return color(d.properties.ufos.length);
+            //return color(d.properties.ufos.length);
+            return d.properties.ufos.length === 0 ? 'red' : color(d.properties.ufos.length);
         });
 
-    // let graticule = d3.geoGraticule();
-    // d3.select("#mapLayer").append('path')
-    // .datum(graticule).attr('class', "grat").attr('d', path).attr('fill', 'none');
+    
+
+
+}
+
+function drawMarkers(svg, projection, ufoData){
+
+    let circleScale = d3.scaleLinear()
+    .domain([d3.min(ufoData, d => d.duration),
+        d3.max(ufoData, d => d.duration)])
+    .range([2, 7]).clamp(true);
+
+    let markerLayer = svg.append('g').attr('id', 'markerLayer');
+
+    markerLayer.selectAll("circle")
+            .data(ufoData)
+            .join("circle")
+            .attr("cx", function (d) {
+                return projection([d.longitude, d.latitude])[0];
+            })
+            .attr("cy", function (d) {
+                return projection([d.longitude, d.latitude])[1];
+            })
+            .attr("r", d => circleScale(d.duration))
+            .style("fill", '#01FB86');
+           
+
 }
