@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+    <head>
+        <style>
+        .header {
+  text-align: center;
+  font-weight: bold;
+  font-size: 50px;
+}
+
+.center-div {
+  text-align:center;
+}
+
+.pane {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.pane svg {
+  width: 100%;
+  height: 2000px;
+}
+
+.pane svg rect.pane-rect {
+  width: 100%;
+  height: 2000px;
+  fill: #fff;
+}
+
+
+path {
+  fill: none;
+  stroke-width: 1px;
+  stroke: #222;
+}
+.grat {
+  stroke: #222;
+  stroke-dasharray: 4px;
+  stroke-width: 1px;
+  opacity: 0.5;
+}
+.hidden {
+}
+
+#tooltip {
+  position: absolute;
+  text-align: center;
+  min-width: 60px;
+  min-width: 28px;
+  padding: 5px;
+  background: #212F3D;
+  stroke: #fff;
+  color: #fff;
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+#tooltip h2 {
+  margin: auto;
+  font: 28px sans-serif;
+  font-weight: bold;
+}
+
+#tooltip .city {
+  font: 20px sans-serif;
+  font-weight: bold;
+}
+
+.title{
+font-weight:700;
+font-size: 20
+}
+
+        </style>
+    </head>
+    <body>
+        <div class="header">UFO Sighting across US</div>
+        <div class="center-div">
+          <div id="button-wrap"></div>
+          <svg></svg>
+        </div>
+          <div id="tooltip"></div>
+       
+          <script src="script.js" async defer></script>
+          <script src="https://d3js.org/d3.v5.min.js"></script>
+          <script src="https://d3js.org/d3-array.v2.min.js"></script>
+          <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> 
+      </body>
+      
+</html>

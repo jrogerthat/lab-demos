@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+    <head>
+        <style>
+            table {
+            border-collapse: collapse;
+            font: 14px sans-serif;
+        }
+
+        th {
+            font-weight: normal;
+            padding-right: 6px;
+            min-width: 125px;
+        }
+
+        thead td, th{
+            cursor: s-resize;
+        }
+
+        tbody tr:first-child td {
+            padding: 10px;
+        }
+
+        tbody th{
+            cursor:pointer;
+            font-weight: bold;
+        }
+
+        tbody td {
+            padding: 5px;
+            border-left: solid 1px #000;
+            color:black;
+            text-align: center;
+            font-size:9px;
+        }
+
+        tbody tr:hover {
+            background-color: #1ABC9C;
+            color:white;
+        }
+
+        tbody tr {
+            background-color: #f0f0f0;
+        }
+
+        .label{
+            fill: #ffffff;
+            font: 14px sans-serif;
+
+        }
+
+        h2 {
+            font-family: 'Quicksand', sans-serif;
+            color: #af161e;
+        }
+
+        h3 {
+            padding-bottom: 0px;
+            margin-bottom: 0px;
+            color: #354050;
+        }
+
+        * {
+            font-family: 'Quicksand', sans-serif;
+        }
+        </style>
+    </head>
+    <body>
+        <div id="table-wrap">
+        </div>
+        <script src="script.js" async defer></script>
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+    </body>
+</html>
